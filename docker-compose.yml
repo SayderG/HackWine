@@ -27,6 +27,7 @@ services:
 
   bot:
     build: .
+    command: "python3 -m bot"
     restart: always
     networks:
       - bot
