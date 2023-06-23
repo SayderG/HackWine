@@ -11,11 +11,14 @@ class DbConfig:
     port: str
     URL: str
 
+
 @dataclass
 class TgBot:
     token: str
-    admin_ids: list[int]
     use_redis: bool
+    admin_ids: list[int]
+    manager_ids: list[int]
+    worker_ids: list[int]
 
 
 @dataclass
@@ -39,8 +42,10 @@ def get_conf(path: str = ".env"):
     return Config(
         bot=TgBot(
             token=env.str("BOT_TOKEN"),
-            admin_ids=list(map(int, env.list("ADMINS"))),
             use_redis=env.bool("USE_REDIS"),
+            admin_ids=list(map(int, env.list("ADMINS"))),
+            manager_ids=list(map(int, env.list("MANAGERS"))),
+            worker_ids=list(map(int, env.list("WORKERS"))),
         ),
         redis=Redis(
             host=env.str("REDIS_HOST"),
