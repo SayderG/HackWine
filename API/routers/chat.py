@@ -2,12 +2,10 @@ from fastapi import FastAPI, WebSocket
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.websockets import WebSocketDisconnect
-from api import redis
 from fastapi import APIRouter
+from API.redis import redis
 
 router = APIRouter()
-
-router.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @router.websocket("/ws/{group}/{username}")
