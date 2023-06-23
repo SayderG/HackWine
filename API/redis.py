@@ -9,5 +9,4 @@ async def start_redis():
 
 
 async def stop_redis():
-    redis.close()
-    await redis.wait_closed()
+    await redis.close()

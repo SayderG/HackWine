@@ -1,6 +1,4 @@
 from fastapi import FastAPI, WebSocket
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from starlette.websockets import WebSocketDisconnect
 from fastapi import APIRouter
 from API.redis import redis

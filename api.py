@@ -7,7 +7,6 @@ from API.redis import stop_redis, start_redis
 
 app = FastAPI()
 main_router = APIRouter()
-redis = None
 
 origins = ["*"]
 
