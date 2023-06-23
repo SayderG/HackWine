@@ -26,16 +26,10 @@ class Redis:
 
 
 @dataclass
-class ApiKeys:
-    iiko: str
-
-
-@dataclass
 class Config:
     bot: TgBot
     redis: Redis
     db: DbConfig
-    api_keys: ApiKeys
 
 
 def get_conf(path: str = ".env"):
@@ -61,7 +55,4 @@ def get_conf(path: str = ".env"):
             port=env.str('POSTGRES_PORT'),
             URL=f"postgresql+asyncpg://{env.str('POSTGRES_USER')}:{env.str('POSTGRES_PASSWORD')}@{env.str('POSTGRES_HOST')}:{env.str('POSTGRES_PORT')}/{env.str('POSTGRES_DB')}"
         ),
-        api_keys=ApiKeys(
-            iiko=env.str('iiko_key')
-        )
     )
