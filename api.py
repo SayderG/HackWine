@@ -2,7 +2,7 @@ import aioredis as aioredis
 from fastapi import FastAPI, APIRouter
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
-from API.routers import root, users
+from API.routers import root, users, chat, cards, kanban
 
 app = FastAPI()
 main_router = APIRouter()
@@ -21,6 +21,9 @@ app.add_middleware(
 
 main_router.include_router(root.router, tags=['root'])
 main_router.include_router(users.router, tags=['users'], prefix='/users')
+main_router.include_router(cards.router, tags=['cards'], prefix='/cards')
+main_router.include_router(kanban.router, tags=['kanban'], prefix='/kanban')
+main_router.include_router(chat.router, tags=['chats'], prefix='/chats')
 
 app.include_router(main_router, prefix='/api/v1')
 

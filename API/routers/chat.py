@@ -3,13 +3,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.websockets import WebSocketDisconnect
 from api import redis
+from fastapi import APIRouter
 
-app = FastAPI()
+router = APIRouter()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+router.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-@app.websocket("/ws/{group}/{username}")
+@router.websocket("/ws/{group}/{username}")
 async def websocket_endpoint(websocket: WebSocket, group: str, username: str):
     await websocket.accept()
 
@@ -27,7 +28,7 @@ async def websocket_endpoint(websocket: WebSocket, group: str, username: str):
         await redis_pubsub.close()
 
 
-@app.websocket("/ws/{group}/stream")
+@router.websocket("/ws/{group}/stream")
 async def message_stream(websocket: WebSocket, group: str):
     await websocket.accept()
 
