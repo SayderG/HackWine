@@ -35,4 +35,6 @@ if __name__ == '__main__':
 
     with open('prediction_dict', 'rb') as f:
          prediction_dict = pickle.load(f)
-    print(get_prediction(prediction_dict))
+
+    print(prediction_dict)
+    # print(get_prediction(prediction_dict))
