@@ -3,6 +3,9 @@ from aiogram import Dispatcher
 from aiogram.types import Message
 
 
+async def audience(messege: Message):
+    pass
+
 async def mailing(message: Message):
     config = message.bot.get('config')
     workers = config.bot.worker_ids

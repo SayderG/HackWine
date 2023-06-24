@@ -40,3 +40,4 @@ class CardCreate(CardBase):
 
 class CardRead(CardBase):
     id: int
+    column_id: int

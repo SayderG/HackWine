@@ -1,11 +1,10 @@
-import aioredis as aioredis
 from fastapi import FastAPI, APIRouter
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
 from API.routers import root, users, chat, cards, kanban
 from API.redis import stop_redis, start_redis
 
-app = FastAPI()
+app = FastAPI(secure=False)
 main_router = APIRouter()
 
 origins = ["*"]
@@ -14,7 +13,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["POST", "GET", "PUT", "PATCH", "HEAD"],
+    allow_methods=["*"],
     allow_headers=["*"],
     max_age=3600,
 )
@@ -39,4 +38,4 @@ async def shutdown_event():
 
 
 if __name__ == '__main__':
-    uvicorn.run("api:app", host='0.0.0.0', port=8000, reload=True)
+    uvicorn.run("api:app", host='0.0.0.0', port=8008, reload=True)

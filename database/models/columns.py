@@ -10,8 +10,6 @@ class ColumnBase(SQLModel):
 class Columns(ColumnBase, table=True):
     id: Optional[int] = Field(primary_key=True)
 
-    funnel_id: int = Field(foreign_key="funnels.id")
-    funnel: Optional["Funnels"] = Relationship(back_populates="columns", sa_relationship_kwargs={"lazy": 'selectin'})
     cards: List["Cards"] = Relationship(back_populates="column", sa_relationship_kwargs={"lazy": 'selectin'})
 
 
@@ -24,6 +22,3 @@ class ColumnRead(ColumnBase):
     pass
 
 
-class ColumnReadWithCount(ColumnBase):
-    id: int
-    pass
