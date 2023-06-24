@@ -6,6 +6,7 @@ from fastapi import HTTPException
 
 
 class CardBase(SQLModel):
+    author: str = Field(default='Иван Иванов')
     title: str
     subtitle: str
     type: str
@@ -29,13 +30,6 @@ class CardCreate(CardBase):
             return value
         else:
             raise HTTPException(404, detail='column_id most be >= 1')
-
-    @validator('type')
-    def validate_type(cls, value):
-        if value.lower() in ['important', 'interesting', 'simple']:
-            return value.lower()
-        else:
-            raise HTTPException(404, detail='most be only important, interesting or simple')
 
 
 class CardRead(CardBase):
