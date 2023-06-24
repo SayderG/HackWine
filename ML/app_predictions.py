@@ -12,7 +12,7 @@ def get_prediction(prediction_data_dict:dict):
     # Create a DataFrame with the desired structure
     data = pd.DataFrame(prediction_data_dict)
 
-    data['Fenophase'] = data['Fenophase'].astype('category')
+    data['fenophase'] = data['fenophase'].astype('category')
 
 
     # Drop the 'number_of_cars' column from the new data
@@ -36,5 +36,5 @@ if __name__ == '__main__':
     with open('prediction_dict', 'rb') as f:
          prediction_dict = pickle.load(f)
 
-    print(prediction_dict)
+  
     # print(get_prediction(prediction_dict))
