@@ -15,7 +15,7 @@ async def create_column(column: ColumnCreate, db=Depends(AsyncDatabase.get_sessi
 
 
 @router.get("/", name='get all columns')
-# @cache(expire=10)
+@cache(expire=10)
 async def get_column(db=Depends(AsyncDatabase.get_session)):
     columns = await KanbanRepository(db).all()
     if not columns:
