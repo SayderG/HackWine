@@ -2,7 +2,7 @@ from typing import List
 from database.repositories.kanbanRepository import KanbanRepository
 from fastapi import APIRouter, Depends, HTTPException
 from database.base import AsyncDatabase
-from database.models.columns import ColumnRead, ColumnCreate
+from database.models.columns import ColumnRead, ColumnCreate, ColumnReadWithCards
 from database.models.cards import CardRead, CardCreate
 from fastapi_cache.decorator import cache
 
@@ -14,13 +14,13 @@ async def create_column(column: ColumnCreate, db=Depends(AsyncDatabase.get_sessi
     return await KanbanRepository(db).create(column.__dict__)
 
 
-@router.get("/", name='get all columns', response_model=List[ColumnRead])
-@cache(expire=60)
+@router.get("/", name='get all columns')
+# @cache(expire=10)
 async def get_column(db=Depends(AsyncDatabase.get_session)):
     columns = await KanbanRepository(db).all()
     if not columns:
         raise HTTPException(status_code=404, detail="Column not found")
-    return columns
+    return [column.__dict__ for column in columns]
 
 
 @router.delete("/{column_id}", name='delete column')
@@ -31,12 +31,12 @@ async def delete_column(column_id: int, db=Depends(AsyncDatabase.get_session)):
     await KanbanRepository(db).delete(column_id)
 
 
-@router.get("/{column_id}", name='get by id column', response_model=ColumnRead)
+@router.get("/{column_id}", name='get by id column', response_model=ColumnReadWithCards)
 async def get_column(column_id: int, db=Depends(AsyncDatabase.get_session)):
     column = await KanbanRepository(db).by_id(column_id)
     if not column:
         raise HTTPException(status_code=404, detail="Column not found")
-    return column
+    return column.__dict__
 
 
 @router.put("/columns/{column_id}/cards/{card_id}", name='move card', response_model=CardRead)

@@ -22,3 +22,5 @@ class ColumnRead(ColumnBase):
     pass
 
 
+class ColumnReadWithCards(ColumnRead):
+    cards: List["Cards"] = Relationship(back_populates="column", sa_relationship_kwargs={"lazy": 'selectin'})
