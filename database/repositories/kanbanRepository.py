@@ -9,7 +9,7 @@ class KanbanRepository(BaseRepository):
     model = Columns
 
     async def all(self):
-        query = await self.session.execute(select(Columns))
+        query = await self.session.execute(select(Columns).order_by(Columns.id))
         columns = query.scalars().all()
         for column in columns:
             column.count = len(column.cards)
