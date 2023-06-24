@@ -41,8 +41,8 @@ async def get_column(column_id: int, db=Depends(AsyncDatabase.get_session)):
 
 
 @router.put("/columns/{column_id}/cards/{card_id}", name='move card', response_model=CardRead)
-async def move_card(column_id: int, task_id: int, db=Depends(AsyncDatabase.get_session)):
+async def move_card(column_id: int, card_id: int, db=Depends(AsyncDatabase.get_session)):
     column = await KanbanRepository(db).by_id(column_id)
     if not column:
         raise HTTPException(status_code=404, detail="Column not found")
-    return await KanbanRepository(db).move_card(task_id, column_id)
+    return await KanbanRepository(db).move_card(card_id, column_id)
