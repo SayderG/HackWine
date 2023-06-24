@@ -23,3 +23,4 @@ class PointCreate(PointBase):
 
 class PointRead(PointBase):
     id: int
+    created_ad: datetime.datetime
