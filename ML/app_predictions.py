@@ -4,7 +4,7 @@ import numpy as np
 
 
 def get_prediction(prediction_data_dict: dict):
-    with open('models/harvest_pred_model', 'rb') as f:
+    with open('ML/models/harvest_pred_model', 'rb') as f:
         model_lgbm = pickle.load(f)
 
     np.random.seed(0)
