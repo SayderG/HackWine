@@ -1,3 +1,4 @@
+import json
 from typing import List
 from database.repositories.kanbanRepository import KanbanRepository
 from fastapi import APIRouter, Depends, HTTPException
@@ -14,13 +15,13 @@ async def create_column(column: ColumnCreate, db=Depends(AsyncDatabase.get_sessi
     return await KanbanRepository(db).create(column.__dict__)
 
 
-@router.get("/", name='get all columns')
+@router.get("/", name='get all columns', response_model=List[ColumnReadWithCards])
 @cache(expire=10)
 async def get_column(db=Depends(AsyncDatabase.get_session)):
     columns = await KanbanRepository(db).all()
     if not columns:
         raise HTTPException(status_code=404, detail="Column not found")
-    return [column.__dict__ for column in columns]
+    return columns
 
 
 @router.delete("/{column_id}", name='delete column')
