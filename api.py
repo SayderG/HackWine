@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
-from API.routers import root, users, chat, cards, kanban, points
+from API.routers import root, users, chat, cards, kanban, points, cells
 from API.redis import stop_redis, start_redis, redis
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -25,6 +25,7 @@ main_router.include_router(users.router, tags=['users'], prefix='/users')
 main_router.include_router(cards.router, tags=['cards'], prefix='/cards')
 main_router.include_router(kanban.router, tags=['kanban'], prefix='/kanban')
 main_router.include_router(points.router, tags=['points'], prefix='/points')
+main_router.include_router(cells.router, tags=['cells'], prefix='/cells')
 main_router.include_router(chat.router, tags=['chats'], prefix='/chats')
 
 app.include_router(main_router, prefix='/api/v1')
