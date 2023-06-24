@@ -23,7 +23,7 @@ def get_prediction(prediction_data_dict:dict):
     # Add the predictions to the data DataFrame
     data['output'] = predictions
     data= data[['latitude','longitude','output']] 
-    data = data.to_dict()
+    data = data.to_dict(orient="records")
     # Display the generated dataset
 
     return data
