@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 from database.base import AsyncDatabase
 from database.repositories.PointRepository import PointRepository
 from database.models.points import PointCreate, PointRead
+from fastapi_cache.decorator import cache
 
 router = APIRouter()
 
@@ -14,6 +15,7 @@ async def create_card(point: PointCreate, session=Depends(AsyncDatabase.get_sess
 
 
 @router.get('/all', name='get all points', response_model=List[PointRead])
+@cache(expire=60)
 async def all_cards(session=Depends(AsyncDatabase.get_session)):
     return await PointRepository(session).all()
 

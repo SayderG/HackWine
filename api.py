@@ -2,7 +2,9 @@ from fastapi import FastAPI, APIRouter
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
 from API.routers import root, users, chat, cards, kanban, points
-from API.redis import stop_redis, start_redis
+from API.redis import stop_redis, start_redis, redis
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
 
 app = FastAPI(secure=False)
 main_router = APIRouter()
@@ -31,7 +33,7 @@ app.include_router(main_router, prefix='/api/v1')
 @app.on_event("startup")
 async def startup_event():
     await start_redis()
-
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 @app.on_event("shutdown")
 async def shutdown_event():

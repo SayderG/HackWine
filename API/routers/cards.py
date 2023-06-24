@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 from database.base import AsyncDatabase
 from database.repositories.CardRepository import CardRepository
 from database.models.cards import CardCreate, CardRead
+from fastapi_cache.decorator import cache
 
 router = APIRouter()
 
@@ -14,6 +15,7 @@ async def create_card(card: CardCreate, session=Depends(AsyncDatabase.get_sessio
 
 
 @router.get('/all', name='get all cards', response_model=List[CardRead])
+@cache(expire=60)
 async def all_cards(session=Depends(AsyncDatabase.get_session)):
     return await CardRepository(session).all()
 

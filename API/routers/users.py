@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 from database.base import AsyncDatabase
 from database.repositories.UserRepository import UsersRepository
 from database.models.users import UserLogin, UserRead, UserReg
+from fastapi_cache.decorator import cache
 
 router = APIRouter()
 
@@ -14,6 +15,7 @@ async def auth_user(login: UserLogin, session=Depends(AsyncDatabase.get_session)
 
 
 @router.get('/all', name='get all user', response_model=List[UserRead])
+@cache(expire=60)
 async def all_user(session=Depends(AsyncDatabase.get_session)):
     return await UsersRepository(session).all()
 

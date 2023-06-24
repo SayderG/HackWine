@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from database.base import AsyncDatabase
 from database.models.columns import ColumnRead, ColumnCreate
 from database.models.cards import CardRead, CardCreate
+from fastapi_cache.decorator import cache
 
 router = APIRouter()
 
@@ -14,6 +15,7 @@ async def create_column(column: ColumnCreate, db=Depends(AsyncDatabase.get_sessi
 
 
 @router.get("/", name='get all columns', response_model=List[ColumnRead])
+@cache(expire=60)
 async def get_column(db=Depends(AsyncDatabase.get_session)):
     columns = await KanbanRepository(db).all()
     if not columns:
