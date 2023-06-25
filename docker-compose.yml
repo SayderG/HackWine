@@ -29,16 +29,6 @@ services:
       - redis-data:/var/lib/Wine/redis
       - redis-conf:/usr/local/etc/Wine/redis/redis.conf
 
-  bot:
-    build: .
-    command: "python3 -m bot"
-    restart: always
-    networks:
-      - bot
-    env_file:
-      - .env
-    volumes:
-      - .:/bot
 
 volumes:
   redis-data:
