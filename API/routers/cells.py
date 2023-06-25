@@ -19,6 +19,12 @@ async def all_cells(session=Depends(AsyncDatabase.get_session)):
     return await CellRepository(session).all()
 
 
+@router.get('/predict/{cell_id}', name='get cell predict by id')
+@cache(expire=120)
+async def cell_predict_by_id(cell_id: int, session=Depends(AsyncDatabase.get_session)):
+    return await CellRepository(session).predict(cell_id)
+
+
 @router.get('/{cell_id}', name='get cell by id', response_model=CellRead)
 @cache(expire=120)
 async def cell_by_id(cell_id: int, session=Depends(AsyncDatabase.get_session)):

@@ -3,10 +3,16 @@ import aioredis
 redis = None
 
 
-async def start_redis():
+async def get_redis():
     global redis
-    redis = await aioredis.from_url("redis://localhost:6379")
+    if redis is None:
+        redis = await aioredis.from_url("redis://localhost:6379")
+    return redis
 
 
 async def stop_redis():
-    await redis.close()
+    global redis
+    if redis is not None:
+        await redis.close()
+        await redis.wait_closed()
+        redis = None
