@@ -19,8 +19,9 @@ class BaseRepository:
         return result.scalars().all()
 
     async def by_id(self, model_id: int):
-        query = await self.session.execute(select(self.model).where(self.model.id == model_id))
-        return query.scalars().first()
+        # query = await self.session.execute(select(self.model).where(self.model.id == model_id))
+        # return query.scalars().first()
+        return await self.session.get(self.model, model_id)
 
     async def create(self, data: dict):
         try:
