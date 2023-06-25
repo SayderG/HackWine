@@ -11,5 +11,5 @@ class CellRepository(BaseRepository):
     async def predict(self, cell_id: int):
         query = await self.session.execute(select(Cell_predicts).where(Cell_predicts.place == cell_id))
         cell_data = query.scalars().first()
-        predict = get_prediction(cell_data.dict())
+        predict = get_prediction([cell_data.dict()])
         return predict
